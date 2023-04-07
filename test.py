@@ -4,7 +4,7 @@ import json
 import os
 import wget
 
-url = "https://avaye-ryra.ir/wp-json/wp/v2/posts"
+url = "https://avaye-ryra.ir/wp-json/wp/v2"
 
 creditionals = 'adminy:e7j7 V4NF SBXv uEs9 URmS 077A'
 token = base64.b64encode(creditionals.encode()).decode()
@@ -16,21 +16,21 @@ babo = wget.download('https://cdn.borna.news/thumbnail/jGQcWuuSTlYf/zKlnR2CgDMsL
 # pic = os.rename('74.jpg','image.jpg')
 
 media = {
-    'file' : open('74.jpg', 'rb'),
+    'file' : open('97.jpg', 'rb'),
     'caption' : 'try try'
 }
 
 image = requests.post(url + '/media', headers=header, files=media)
 imageURL = str(json.loads(image.content))
-print(imageURL)
+print(imageURL['link'])
 
 
 post = {
     'date': '2023-04-04T21:00:00',
     'title': 'first try',
-    'content': 'kosshere mahz for try <img src="' + imageURL + '">'
+    'content': 'kosshere mahz for try <img src="' + imageURL['link'] + '">'
 }
 
-r = requests.post(url, headers=header, data=post)
+r = requests.post(url + '/posts', headers=header, data=post)
 
 print(r)
