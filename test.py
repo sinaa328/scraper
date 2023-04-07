@@ -21,7 +21,7 @@ media = {
 }
 
 image = requests.post(url + '/media', headers=header, files=media)
-imageURL = str(json.loads(image.content))
+imageURL = json.loads(image.content)
 print(imageURL['link'])
 
 
