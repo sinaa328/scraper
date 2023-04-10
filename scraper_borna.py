@@ -31,21 +31,20 @@ h = 0
 
 
 links = []
-for a in range(0,1):
+for a in range(0,75):
     link = f"https://www.borna.news/%D8%A8%D8%AE%D8%B4-%D9%88%D8%B1%D8%B2%D8%B4%DB%8C-7?curp=1&categories=7&dateRange%5Bstart%5D=-7776000&order=order_time&page={a}"
 
     req = requests.get(link)
     soup = BeautifulSoup(req.content, "html.parser")
 
-    news_link = soup.find_all(class_="title", limit=1)
+    news_link = soup.find_all(class_="title", limit=15)
 
 for i in news_link:
     
     mini = i.find("a").attrs["href"]
     links.append("https://www.borna.news"+mini)
-
+print('getting links successful')
 for x in reversed(links):
-    print(x)        
     req2 = requests.get(x)
     soup = BeautifulSoup(req2.content, "html.parser")
     res = soup.title
@@ -60,12 +59,9 @@ for x in reversed(links):
     res1 = res1.replace('<title>','')
     res1 = res1.replace('</title>','')
 
-    print(res1)
-    print(pic.attrs['src'])
     cap3 = ''
     for g in range(0,len(cap2)):
         cap3 += cap2[g] + '\n'
-    print(cap3)
 
     url = "https://avaye-ryra.ir/wp-json/wp/v2"
 
@@ -85,12 +81,10 @@ for x in reversed(links):
 
     image = requests.post(url + '/media', headers=header, files=media)
     imageURL = json.loads(image.content)
-    print(imageURL['link'])
 
     post = {
         'date': timefake[h],
         'title': res1,
-        # 'content': '<img width="1200" height="800" src="' + imageURL['link'] + '"> \n \n \n \n' + cap3,
         'content': cap3,
         'categories' : '4',
         'status' : 'publish',
@@ -99,5 +93,5 @@ for x in reversed(links):
 
     r = requests.post(url + '/posts', headers=header, data=post)
     h += 1
-
+    print('\nposting num ', h+1,'...')
     print(r)
