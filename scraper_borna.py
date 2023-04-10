@@ -6,7 +6,7 @@ import wget
 import os
 import random
 import glob
-
+import time
 
 timefake = []
 for mounth in range(1,13):
@@ -45,6 +45,9 @@ for i in news_link:
     links.append("https://www.borna.news"+mini)
 print('getting links successful')
 for x in reversed(links):
+    secends = random.randint(0,6)
+    time.sleep(secends)
+    print(f'[!] sleep robot for {secends} seconds [!]')
     req2 = requests.get(x)
     soup = BeautifulSoup(req2.content, "html.parser")
     res = soup.title
