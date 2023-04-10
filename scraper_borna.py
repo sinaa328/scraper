@@ -94,7 +94,7 @@ for x in reversed(links):
         'content': cap3,
         'categories' : '4',
         'status' : 'publish',
-        'featured_image' : imageURL['link']
+        'featured_media' : imageURL['id']
     }
 
     r = requests.post(url + '/posts', headers=header, data=post)
